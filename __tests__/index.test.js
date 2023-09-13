@@ -1,4 +1,3 @@
-import { fail } from 'node:assert';
 import { gendiff } from '../index.js';
 import { readFileSync } from 'node:fs';
 
