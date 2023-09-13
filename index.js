@@ -37,7 +37,7 @@ const gendiff = (filepath1, filepath2) => {
       if (a < b) return -1;
       return 0;
     });
-  diff.unshift('{')
+  diff.unshift('{');
   diff.push('}');
   return diff.join('\n');
 };
