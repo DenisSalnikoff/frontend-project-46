@@ -2,6 +2,10 @@ name: hello-world
 on: push
 jobs:
   my-job:
+    strategy:
+      # Node versions list
+      matrix:
+        node-version: [20.x]
     runs-on: ubuntu-latest
     steps:
       - run: npm ci
