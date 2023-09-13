@@ -1,6 +1,6 @@
 {
   "bin": {
-    "gendiff": "gendiff.js"
+    "gendiff": "bin/gendiff.js"
   },
   "name": "@hexlet/code",
   "version": "1.0.0",
