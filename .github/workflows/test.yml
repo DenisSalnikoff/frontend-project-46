@@ -1,5 +1,7 @@
-name: hello-world
+name: push tests
 on: push
+env:
+  CI: true
 jobs:
   my-job:
     strategy:
