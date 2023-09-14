@@ -1,13 +1,17 @@
 import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { resolve, extname } from 'node:path';
 import { cwd } from 'node:process';
+import getParser from './src/parsers';
 
 const gendiff = (filepath1, filepath2) => {
-  console.log(resolve(cwd(), filepath1));
   const file1 = readFileSync(resolve(cwd(), filepath1));
   const file2 = readFileSync(resolve(cwd(), filepath2));
-  const obj1 = JSON.parse(file1);
-  const obj2 = JSON.parse(file2);
+  const parser = getParser(extname(filepath1));
+  if (!parser) {
+    return `Не удалось определить парсер для ${filepath1}`;
+  }
+  const obj1 = parser(file1);
+  const obj2 = parser(file2);
   const keys1 = Object.keys(obj1);
   const keys2 = Object.keys(obj2);
 
