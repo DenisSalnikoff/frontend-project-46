@@ -1,36 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { resolve, extname } from 'node:path';
 import { cwd } from 'node:process';
-import getParser from './src/parsers';
+import getParser from './src/parsers.js';
 
 const genAddKey = (key) => `+ ${key}`;
 const genRemoveKey = (key) => `- ${key}`;
 const genIntactKey = (key) => `  ${key}`;
-
-const stringifyDiff = (diffObj, startTab = '') => {
-  const tabAdd = startTab === '' ? '  ' : '    ';
-  const tab = startTab + tabAdd;
-  const diffArr = Object.keys(diffObj)
-    .sort((first, second) => {
-      const sortCharNumber = 2;
-      const a = first.slice(sortCharNumber);
-      const b = second.slice(sortCharNumber);
-      if (a > b) return 1;
-      if (a < b) return -1;
-      return 0;
-    })
-    .map((key) => {
-      const value = (diffObj[key] instanceof Object) ? `{\n${stringifyDiff(diffObj[key], tab)}` : diffObj[key];
-      return `${tab}${key}: ${value}`;
-    });
-  if (startTab === '') {
-    diffArr.unshift('{');
-    diffArr.push('}');
-  } else {
-    diffArr.push(`${startTab}  }`);
-  }
-  return diffArr.join('\n');
-};
 
 const genObjDiff = (obj1, obj2) => {
   const keys1 = Object.keys(obj1);
@@ -69,7 +44,7 @@ const genObjDiff = (obj1, obj2) => {
   return diffObj;
 };
 
-const gendiff = (filepath1, filepath2) => {
+const gendiff = (filepath1, filepath2, formatter) => {
   const file1 = readFileSync(resolve(cwd(), filepath1));
   const file2 = readFileSync(resolve(cwd(), filepath2));
   const parser = getParser(extname(filepath1));
@@ -79,7 +54,7 @@ const gendiff = (filepath1, filepath2) => {
   const obj1 = parser(file1);
   const obj2 = parser(file2);
   const diffObj = genObjDiff(obj1, obj2);
-  return stringifyDiff(diffObj);
+  return formatter(diffObj);
 };
 
 const antiPreferDefaultExport = () => null;
