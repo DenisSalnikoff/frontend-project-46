@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { gendiff } from '../index.js';
-import getFormatter from '../src/formatters.js';
+import getFormatter from '../src/formatters/index.js';
 
 test('gendiff', () => {
   const result = readFileSync('__tests__/result.txt').toString();

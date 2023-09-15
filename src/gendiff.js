@@ -1,4 +1,4 @@
-import getFormatter from './formatters.js';
+import getFormatter from './formatters/index.js';
 import { gendiff } from '../index.js';
 
 export default (args, options) => {

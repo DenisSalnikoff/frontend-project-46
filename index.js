@@ -39,7 +39,12 @@ const genAST = (obj1, obj2) => {
     acc.push({ key, value, state });
     return acc;
   }, ast);
-
+  ast.sort((a, b) => {
+    if (a.key > b.key) return 1;
+    if (a.key < b.key) return -1;
+    const getStateValue = (state) => (state === 'added' ? 1 : -1);
+    return getStateValue(a.state) - getStateValue(b.state);
+  });
   return ast;
 };
 
@@ -52,8 +57,8 @@ const gendiff = (filepath1, filepath2, formatter) => {
   }
   const obj1 = parser(file1);
   const obj2 = parser(file2);
-  const diffObj = genAST(obj1, obj2);
-  return formatter(diffObj);
+  const ast = genAST(obj1, obj2);
+  return formatter(ast);
 };
 
 const antiPreferDefaultExport = () => null;
