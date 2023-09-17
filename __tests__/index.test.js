@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { gendiff } from '../index.js';
+import gendiff from '../index.js';
 import getFormatter from '../src/formatters/index.js';
 
 const json1 = '__tests__/file1.json';

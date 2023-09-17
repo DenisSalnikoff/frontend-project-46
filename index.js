@@ -51,16 +51,18 @@ const genAST = (obj1, obj2) => {
 const gendiff = (filepath1, filepath2, formatter) => {
   const file1 = readFileSync(resolve(cwd(), filepath1));
   const file2 = readFileSync(resolve(cwd(), filepath2));
-  const parser = getParser(extname(filepath1));
-  if (!parser) {
-    return `Не удалось определить парсер для ${filepath1}`;
+  const parser1 = getParser(extname(filepath1));
+  const parser2 = getParser(extname(filepath1));
+  if (!parser1) {
+    return `Failed to identify the parser for ${filepath1}`;
   }
-  const obj1 = parser(file1);
-  const obj2 = parser(file2);
+  if (!parser2) {
+    return `Failed to identify the parser for ${filepath2}`;
+  }
+  const obj1 = parser1(file1);
+  const obj2 = parser2(file2);
   const ast = genAST(obj1, obj2);
   return formatter(ast);
 };
 
-const antiPreferDefaultExport = () => null;
-
-export { gendiff, antiPreferDefaultExport };
+export default gendiff;
