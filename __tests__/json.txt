@@ -1,0 +1,168 @@
+[
+  {
+    "key": "common",
+    "value": [
+      {
+        "key": "follow",
+        "value": false,
+        "state": "added"
+      },
+      {
+        "key": "setting1",
+        "value": "Value 1",
+        "state": "intact"
+      },
+      {
+        "key": "setting2",
+        "value": 200,
+        "state": "removed"
+      },
+      {
+        "key": "setting3",
+        "value": true,
+        "state": "removed"
+      },
+      {
+        "key": "setting3",
+        "value": null,
+        "state": "added"
+      },
+      {
+        "key": "setting4",
+        "value": "blah blah",
+        "state": "added"
+      },
+      {
+        "key": "setting5",
+        "value": [
+          {
+            "key": "key5",
+            "value": "value5",
+            "state": "intact"
+          }
+        ],
+        "state": "added"
+      },
+      {
+        "key": "setting6",
+        "value": [
+          {
+            "key": "doge",
+            "value": [
+              {
+                "key": "wow",
+                "value": "",
+                "state": "removed"
+              },
+              {
+                "key": "wow",
+                "value": "so much",
+                "state": "added"
+              }
+            ],
+            "state": "intact"
+          },
+          {
+            "key": "key",
+            "value": "value",
+            "state": "intact"
+          },
+          {
+            "key": "ops",
+            "value": "vops",
+            "state": "added"
+          }
+        ],
+        "state": "intact"
+      }
+    ],
+    "state": "intact"
+  },
+  {
+    "key": "group1",
+    "value": [
+      {
+        "key": "baz",
+        "value": "bas",
+        "state": "removed"
+      },
+      {
+        "key": "baz",
+        "value": "bars",
+        "state": "added"
+      },
+      {
+        "key": "foo",
+        "value": "bar",
+        "state": "intact"
+      },
+      {
+        "key": "nest",
+        "value": [
+          {
+            "key": "key",
+            "value": "value",
+            "state": "intact"
+          }
+        ],
+        "state": "removed"
+      },
+      {
+        "key": "nest",
+        "value": "str",
+        "state": "added"
+      }
+    ],
+    "state": "intact"
+  },
+  {
+    "key": "group2",
+    "value": [
+      {
+        "key": "abc",
+        "value": 12345,
+        "state": "intact"
+      },
+      {
+        "key": "deep",
+        "value": [
+          {
+            "key": "id",
+            "value": 45,
+            "state": "intact"
+          }
+        ],
+        "state": "intact"
+      }
+    ],
+    "state": "removed"
+  },
+  {
+    "key": "group3",
+    "value": [
+      {
+        "key": "deep",
+        "value": [
+          {
+            "key": "id",
+            "value": [
+              {
+                "key": "number",
+                "value": 45,
+                "state": "intact"
+              }
+            ],
+            "state": "intact"
+          }
+        ],
+        "state": "intact"
+      },
+      {
+        "key": "fee",
+        "value": 100500,
+        "state": "intact"
+      }
+    ],
+    "state": "added"
+  }
+]

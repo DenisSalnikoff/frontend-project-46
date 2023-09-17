@@ -20,3 +20,10 @@ test('plain', () => {
   expect(gendiff(json1, json2, plain)).toEqual(result);
   expect(gendiff(yaml1, yaml2, plain)).toEqual(result);
 });
+
+test('json', () => {
+  const result = readFileSync('__tests__/json.txt').toString();
+  const plain = getFormatter('json');
+  expect(gendiff(json1, json2, plain)).toEqual(result);
+  expect(gendiff(yaml1, yaml2, plain)).toEqual(result);
+});
