@@ -8,7 +8,7 @@ const genAST = (obj1, obj2) => {
   const keys1 = Object.keys(obj1);
   const keys2 = Object.keys(obj2);
 
-  let ast = keys1.reduce((acc, key) => {
+  const metaAst = keys1.reduce((acc, key) => {
     // определяем статус свойства. Для первого файла может быть либо 'intact' либо 'removed'.
     const isIntact = (obj1[key] instanceof Object && obj2[key] instanceof Object)
       || (obj1[key] === obj2[key]);
@@ -20,13 +20,13 @@ const genAST = (obj1, obj2) => {
       return obj1[key];
     };
     const value = getValue();
-    acc.push({ key, value, state });
-    return acc;
+    const modAcc = [...acc, { key, value, state }];
+    return modAcc;
   }, []);
 
-  ast = keys2.reduce((acc, key) => {
+  const ast = keys2.reduce((acc, key) => {
     // проверяем необходимость добавления элемента
-    const astElement = ast.find((el) => el.key === key);
+    const astElement = metaAst.find((el) => el.key === key);
     if (astElement && astElement.state === 'intact') return acc;
     // определяем статус свойства. Для второго файла может быть только 'added'.
     const state = 'added';
@@ -37,9 +37,9 @@ const genAST = (obj1, obj2) => {
       return obj2[key];
     };
     const value = getValue();
-    acc.push({ key, value, state });
-    return acc;
-  }, ast);
+    const modAcc = [...acc, { key, value, state }];
+    return modAcc;
+  }, metaAst);
   ast.sort((a, b) => {
     if (a.key > b.key) return 1;
     if (a.key < b.key) return -1;
