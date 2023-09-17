@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { resolve, extname } from 'node:path';
 import { cwd } from 'node:process';
 import getParser from './src/parsers.js';
+import getFormatter from './src/formatters/index.js';
 
 const genAST = (obj1, obj2) => {
   const keys1 = Object.keys(obj1);
@@ -48,7 +49,7 @@ const genAST = (obj1, obj2) => {
   return ast;
 };
 
-const gendiff = (filepath1, filepath2, formatter) => {
+const gendiff = (filepath1, filepath2, formatName) => {
   const file1 = readFileSync(resolve(cwd(), filepath1));
   const file2 = readFileSync(resolve(cwd(), filepath2));
   const parser1 = getParser(extname(filepath1));
@@ -62,6 +63,7 @@ const gendiff = (filepath1, filepath2, formatter) => {
   const obj1 = parser1(file1);
   const obj2 = parser2(file2);
   const ast = genAST(obj1, obj2);
+  const formatter = getFormatter(formatName);
   return formatter(ast);
 };
 

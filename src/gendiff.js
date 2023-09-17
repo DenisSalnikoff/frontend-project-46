@@ -1,4 +1,3 @@
-import getFormatter from './formatters/index.js';
 import gendiff from '../index.js';
 
 export default (args, options) => {
@@ -19,11 +18,6 @@ export default (args, options) => {
     return;
   }
   const [file1, file2] = args;
-  const formatter = getFormatter(options.format);
-  if (!formatter) {
-    console.log('Incorrect format. Available formats: "stylish", "plain", "json".');
-    return;
-  }
-  const difference = gendiff(file1, file2, formatter);
+  const difference = gendiff(file1, file2, options.format);
   console.log(difference);
 };
