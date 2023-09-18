@@ -24,28 +24,29 @@ const genAST = (obj1, obj2) => {
     return modAcc;
   }, []);
 
-  const ast = keys2.reduce((acc, key) => {
-    // проверяем необходимость добавления элемента
-    const astElement = metaAst.find((el) => el.key === key);
-    if (astElement && astElement.state === 'intact') return acc;
-    // определяем статус свойства. Для второго файла может быть только 'added'.
-    const state = 'added';
-    const getValue = () => {
-      if (obj2[key] instanceof Object) {
-        return genAST(obj2[key], obj2[key]);
-      }
-      return obj2[key];
-    };
-    const value = getValue();
-    const modAcc = [...acc, { key, value, state }];
-    return modAcc;
-  }, metaAst);
-  ast.sort((a, b) => {
-    if (a.key > b.key) return 1;
-    if (a.key < b.key) return -1;
-    const getStateValue = (state) => (state === 'added' ? 1 : -1);
-    return getStateValue(a.state) - getStateValue(b.state);
-  });
+  const ast = keys2
+    .reduce((acc, key) => {
+      // проверяем необходимость добавления элемента
+      const astElement = metaAst.find((el) => el.key === key);
+      if (astElement && astElement.state === 'intact') return acc;
+      // определяем статус свойства. Для второго файла может быть только 'added'.
+      const state = 'added';
+      const getValue = () => {
+        if (obj2[key] instanceof Object) {
+          return genAST(obj2[key], obj2[key]);
+        }
+        return obj2[key];
+      };
+      const value = getValue();
+      const modAcc = [...acc, { key, value, state }];
+      return modAcc;
+    }, metaAst)
+    .sort((a, b) => {
+      if (a.key > b.key) return 1;
+      if (a.key < b.key) return -1;
+      const getStateValue = (state) => (state === 'added' ? 1 : -1);
+      return getStateValue(a.state) - getStateValue(b.state);
+    });
   return ast;
 };
 
