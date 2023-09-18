@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import gendiff from '../index.js';
+import gendiff from '../src/index.js';
 
 const json1 = '__tests__/file1.json';
 const json2 = '__tests__/file2.json';
