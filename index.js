@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { readFileSync } from 'node:fs';
 import { resolve, extname } from 'node:path';
 import { cwd } from 'node:process';
@@ -24,30 +25,23 @@ const genAST = (obj1, obj2) => {
     return modAcc;
   }, []);
 
-  const ast = keys2
-    .reduce((acc, key) => {
-      // проверяем необходимость добавления элемента
-      const astElement = metaAst.find((el) => el.key === key);
-      if (astElement && astElement.state === 'intact') return acc;
-      // определяем статус свойства. Для второго файла может быть только 'added'.
-      const state = 'added';
-      const getValue = () => {
-        if (obj2[key] instanceof Object) {
-          return genAST(obj2[key], obj2[key]);
-        }
-        return obj2[key];
-      };
-      const value = getValue();
-      const modAcc = [...acc, { key, value, state }];
-      return modAcc;
-    }, metaAst)
-    .sort((a, b) => {
-      if (a.key > b.key) return 1;
-      if (a.key < b.key) return -1;
-      const getStateValue = (state) => (state === 'added' ? 1 : -1);
-      return getStateValue(a.state) - getStateValue(b.state);
-    });
-  return ast;
+  const ast = keys2.reduce((acc, key) => {
+    const astElement = metaAst.find((el) => el.key === key);
+    if (astElement && astElement.state === 'intact') return acc;
+    const state = 'added';
+    const getValue = () => {
+      if (obj2[key] instanceof Object) {
+        return genAST(obj2[key], obj2[key]);
+      }
+      return obj2[key];
+    };
+    const value = getValue();
+    const modAcc = [...acc, { key, value, state }];
+    return modAcc;
+  }, metaAst);
+  const getStatePriority = (state) => (state === 'added' ? 1 : 0);
+  const sortedAST = _.sortBy(ast, [(el) => el.key, (el) => getStatePriority(el.state)]);
+  return sortedAST;
 };
 
 const gendiff = (filepath1, filepath2, formatName) => {
