@@ -1,5 +1,6 @@
 const getFormattedValue = (line) => {
-  const value = Array.isArray(line.value) ? '[complex value]' : line.value;
+  const isComplexValue = Array.isArray(line.value) || line.value instanceof Object;
+  const value = isComplexValue ? '[complex value]' : line.value;
   return typeof line.value === 'string' ? `'${value}'` : value;
 };
 
